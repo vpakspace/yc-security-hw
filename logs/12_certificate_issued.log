@@ -1,0 +1,25 @@
+$ scripts/site.sh status
+{
+  "id": "fpqbp79575klg2li1r25",
+  "name": "netology-site",
+  "status": "ISSUED",
+  "domains": [
+    "vpakspace.213-180-193-247.sslip.io"
+  ],
+  "issuer": "CN=YR1,O=Let's Encrypt,C=US",
+  "not_before": "2026-11-27T02:15:02Z",
+  "not_after": "2027-02-25T02:15:01Z",
+  "challenges": [
+    {
+      "domain": "vpakspace.213-180-193-247.sslip.io",
+      "type": "HTTP",
+      "status": "VALID",
+      "error": null
+    }
+  ]
+}
+$ yc certificate-manager certificate get --name netology-site --format json | jq '{created_at, issued_at}'
+{
+  "created_at": "2026-11-27T03:06:09.191Z",
+  "issued_at": "2026-11-27T03:13:36.170Z"
+}

@@ -1,0 +1,11 @@
+$ scripts/site.sh https
+name: vpakspace.213-180-193-247.sslip.io
+source_type: SOURCE_TYPE_MANAGED_BY_CERTIFICATE_MANAGER
+certificate_id: fpqbp79575klg2li1r25
+
+удалён объект .well-known/acme-challenge/Twe2UhNgIF0CtyywkacfXE02RUyvoeMGe8WuHkI05W8
+$ yc storage bucket get-https --name vpakspace.213-180-193-247.sslip.io
+name: vpakspace.213-180-193-247.sslip.io
+source_type: SOURCE_TYPE_MANAGED_BY_CERTIFICATE_MANAGER
+certificate_id: fpqbp79575klg2li1r25
+

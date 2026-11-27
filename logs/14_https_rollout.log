@@ -1,0 +1,59 @@
+$ date -u +%H:%M:%SZ; scripts/site.sh check
+03:14:30Z
+== DNS
+213.180.193.247
+== http://vpakspace.213-180-193-247.sslip.io/
+HTTP 200
+== https://vpakspace.213-180-193-247.sslip.io/
+curl: (60) SSL: no alternative certificate subject name matches target host name 'vpakspace.213-180-193-247.sslip.io'
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+HTTP 000, проверка сертификата: 1 (0 — без ошибок)
+== сертификат, который отдаёт сервер
+subject=C = RU, ST = Moscow, L = Moscow, O = YANDEX LLC, CN = *.storage-1.yandexcloud.net
+issuer=C = BE, O = GlobalSign nv-sa, CN = GlobalSign GCC R46 OV TLS CA 2025
+notBefore=Nov 10 16:32:08 2026 GMT
+notAfter=May 10 20:59:59 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:*.storage-1.yandexcloud.net, DNS:*.storage-internal.yandexcloud.net, DNS:storage-internal.yandexcloud.net, DNS:*.website-3.yandexcloud.net, DNS:website-3.yandexcloud.net, DNS:website-2.yandexcloud.net, DNS:*.website-2.yandexcloud.net, DNS:storage-3.yandexcloud.net, DNS:*.storage-3.yandexcloud.net, DNS:*.storage.pe.yandexcloud.net, DNS:*.s3.yandexcloud.net, DNS:*.storage.ua.yandexcloud.net, DNS:*.website.ua.yandexcloud.net, DNS:*.s3.ua.yandexcloud.net, DNS:*.website.yandexcloud.net, DNS:*.storage.yandexcloud.net, DNS:*.website-1.yandexcloud.net, DNS:*.storage-2.yandexcloud.net, DNS:s3.ua.yandexcloud.net, DNS:s3.yandexcloud.net, DNS:storage-2.yandexcloud.net, DNS:storage.pe.yandexcloud.net, DNS:storage.ua.yandexcloud.net, DNS:storage.yandexcloud.net, DNS:website-1.yandexcloud.net, DNS:website.ua.yandexcloud.net, DNS:website.yandexcloud.net, DNS:storage-1.yandexcloud.net
+[exit code 1]
+$ until curl -sS -m 20 -o /dev/null https://vpakspace.213-180-193-247.sslip.io/ 2>/dev/null; do sleep 30; done; echo "$(date -u +%H:%M:%SZ) HTTPS с нашим сертификатом отвечает"   # запущено в фоне сразу после проверки выше
+03:18:25Z HTTPS с нашим сертификатом отвечает
+$ date -u +%H:%M:%SZ; scripts/site.sh check
+03:18:29Z
+== DNS
+213.180.193.247
+== http://vpakspace.213-180-193-247.sslip.io/
+HTTP 200
+== https://vpakspace.213-180-193-247.sslip.io/
+curl: (60) SSL: no alternative certificate subject name matches target host name 'vpakspace.213-180-193-247.sslip.io'
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+HTTP 000, проверка сертификата: 1 (0 — без ошибок)
+== сертификат, который отдаёт сервер
+subject=C = RU, ST = Moscow, L = Moscow, O = YANDEX LLC, CN = *.storage-1.yandexcloud.net
+issuer=C = BE, O = GlobalSign nv-sa, CN = GlobalSign GCC R46 OV TLS CA 2025
+notBefore=Nov 10 16:32:08 2026 GMT
+notAfter=May 10 20:59:59 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:*.storage-1.yandexcloud.net, DNS:*.storage-internal.yandexcloud.net, DNS:storage-internal.yandexcloud.net, DNS:*.website-3.yandexcloud.net, DNS:website-3.yandexcloud.net, DNS:website-2.yandexcloud.net, DNS:*.website-2.yandexcloud.net, DNS:storage-3.yandexcloud.net, DNS:*.storage-3.yandexcloud.net, DNS:*.storage.pe.yandexcloud.net, DNS:*.s3.yandexcloud.net, DNS:*.storage.ua.yandexcloud.net, DNS:*.website.ua.yandexcloud.net, DNS:*.s3.ua.yandexcloud.net, DNS:*.website.yandexcloud.net, DNS:*.storage.yandexcloud.net, DNS:*.website-1.yandexcloud.net, DNS:*.storage-2.yandexcloud.net, DNS:s3.ua.yandexcloud.net, DNS:s3.yandexcloud.net, DNS:storage-2.yandexcloud.net, DNS:storage.pe.yandexcloud.net, DNS:storage.ua.yandexcloud.net, DNS:storage.yandexcloud.net, DNS:website-1.yandexcloud.net, DNS:website.ua.yandexcloud.net, DNS:website.yandexcloud.net, DNS:storage-1.yandexcloud.net
+[exit code 1]
+$ bash .work/rollout.sh   # черновая копия цикла из scripts/rollout.sh (домен был вписан в сам скрипт)
+03:18:58Z  HTTPS с проверкой сертификата: 4 из 20
+03:19:40Z  HTTPS с проверкой сертификата: 7 из 20
+03:20:36Z  HTTPS с проверкой сертификата: 10 из 20
+03:21:20Z  HTTPS с проверкой сертификата: 14 из 20
+03:22:19Z  HTTPS с проверкой сертификата: 10 из 20
+03:23:04Z  HTTPS с проверкой сертификата: 17 из 20
+03:24:00Z  HTTPS с проверкой сертификата: 19 из 20
+03:24:46Z  HTTPS с проверкой сертификата: 19 из 20
+03:25:32Z  HTTPS с проверкой сертификата: 19 из 20
+03:26:25Z  HTTPS с проверкой сертификата: 20 из 20
+03:27:10Z  HTTPS с проверкой сертификата: 20 из 20
+03:27:56Z  HTTPS с проверкой сертификата: 20 из 20

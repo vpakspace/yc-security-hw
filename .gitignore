@@ -1,0 +1,20 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Секреты / личное
+personal.auto.tfvars
+.authorized_key.json
+*.authorized_key.json
+id_*
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+
+# Рабочие файлы сессии: сохранённые планы (содержат секреты state) и сырые логи
+.work/

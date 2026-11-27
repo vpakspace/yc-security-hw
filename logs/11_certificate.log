@@ -1,0 +1,25 @@
+$ scripts/site.sh cert
+запрошен сертификат netology-site для vpakspace.213-180-193-247.sslip.io
+загружен .well-known/acme-challenge/Twe2UhNgIF0CtyywkacfXE02RUyvoeMGe8WuHkI05W8
+проверка: GET http://vpakspace.213-180-193-247.sslip.io/.well-known/acme-challenge/Twe2UhNgIF0CtyywkacfXE02RUyvoeMGe8WuHkI05W8
+HTTP 200
+$ scripts/site.sh status
+{
+  "id": "fpqbp79575klg2li1r25",
+  "name": "netology-site",
+  "status": "VALIDATING",
+  "domains": [
+    "vpakspace.213-180-193-247.sslip.io"
+  ],
+  "issuer": null,
+  "not_before": null,
+  "not_after": null,
+  "challenges": [
+    {
+      "domain": "vpakspace.213-180-193-247.sslip.io",
+      "type": "HTTP",
+      "status": "PENDING",
+      "error": null
+    }
+  ]
+}

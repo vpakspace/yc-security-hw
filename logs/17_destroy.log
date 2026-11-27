@@ -1,0 +1,108 @@
+$ yc storage bucket list --folder-id <folder_id>
++------------------------------------+----------------------+----------+-----------------------+---------------------+
+|                NAME                |      FOLDER ID       | MAX SIZE | DEFAULT STORAGE CLASS |     CREATED AT      |
++------------------------------------+----------------------+----------+-----------------------+---------------------+
+| vpakspace-20261125                 | <folder_id> |        0 | STANDARD              | 2026-11-27 03:00:21 |
+| vpakspace.213-180-193-247.sslip.io | <folder_id> |        0 | STANDARD              | 2026-11-27 03:05:49 |
++------------------------------------+----------------------+----------+-----------------------+---------------------+
+
+$ yc kms symmetric-key list --folder-id <folder_id>
++----------------------+---------------------+----------------------+-------------------+---------------------+--------+
+|          ID          |        NAME         |  PRIMARY VERSION ID  | DEFAULT ALGORITHM |     CREATED AT      | STATUS |
++----------------------+---------------------+----------------------+-------------------+---------------------+--------+
+| abjatruek5pla4ikkd0g | netology-bucket-key | abjh57274mibpbcoqq0i | AES_256           | 2026-11-27 03:00:19 | ACTIVE |
++----------------------+---------------------+----------------------+-------------------+---------------------+--------+
+
+$ yc certificate-manager certificate list --folder-id <folder_id>
++----------------------+---------------+------------------------------------+---------------------+---------+--------+
+|          ID          |     NAME      |              DOMAINS               |      NOT AFTER      |  TYPE   | STATUS |
++----------------------+---------------+------------------------------------+---------------------+---------+--------+
+| fpqbp79575klg2li1r25 | netology-site | vpakspace.213-180-193-247.sslip.io | 2027-02-25 02:15:01 | MANAGED | ISSUED |
++----------------------+---------------+------------------------------------+---------------------+---------+--------+
+
+$ yc iam service-account list --folder-id <folder_id>
++----------------------+------------+--------+---------------------+-----------------------+
+|          ID          |    NAME    | LABELS |     CREATED AT      | LAST AUTHENTICATED AT |
++----------------------+------------+--------+---------------------+-----------------------+
+| ajedu0ctijs62hae8tu7 | storage-sa |        | 2026-11-27 03:00:20 | 2026-11-27 03:40:00   |
+| ajerd2n99sk27rd8e3s1 | terraform  |        | 2026-07-08 07:34:51 | 2026-11-27 03:10:00   |
++----------------------+------------+--------+---------------------+-----------------------+
+
+$ terraform -chdir=terraform state list
+time_sleep.wait_for_iam
+yandex_iam_service_account.storage
+yandex_iam_service_account_static_access_key.storage
+yandex_kms_symmetric_key.bucket
+yandex_kms_symmetric_key_iam_member.storage
+yandex_resourcemanager_folder_iam_member.storage
+yandex_storage_bucket.this
+yandex_storage_object.picture
+$ scripts/site.sh down
+удалён объект error.html
+удалён объект index.html
+...1s...6s...done (10s)
+удалён бакет vpakspace.213-180-193-247.sslip.io
+удалён сертификат netology-site
+# аккаунту terraform на время destroy выдана роль admin на каталог
+$ terraform -chdir=terraform apply -input=false -no-color ../.work/plan_destroy.tfplan
+yandex_storage_object.picture: Destroying... [id=picture.png]
+yandex_storage_object.picture: Destruction complete after 1s
+time_sleep.wait_for_iam: Destroying... [id=2026-11-27T03:01:27Z]
+yandex_iam_service_account_static_access_key.storage: Destroying... [id=aje6nfej2qi0m1lkja3d]
+yandex_storage_bucket.this: Destroying... [id=vpakspace-20261125]
+time_sleep.wait_for_iam: Destruction complete after 0s
+yandex_kms_symmetric_key_iam_member.storage: Destroying... [id=abjatruek5pla4ikkd0g/kms.keys.encrypterDecrypter/serviceAccount:ajedu0ctijs62hae8tu7]
+yandex_resourcemanager_folder_iam_member.storage: Destroying... [id=<folder_id>/storage.editor/serviceAccount:ajedu0ctijs62hae8tu7]
+yandex_iam_service_account_static_access_key.storage: Destruction complete after 2s
+yandex_resourcemanager_folder_iam_member.storage: Destruction complete after 5s
+yandex_kms_symmetric_key_iam_member.storage: Destruction complete after 6s
+yandex_iam_service_account.storage: Destroying... [id=ajedu0ctijs62hae8tu7]
+yandex_storage_bucket.this: Still destroying... [id=vpakspace-20261125, 00m10s elapsed]
+yandex_storage_bucket.this: Destruction complete after 14s
+yandex_kms_symmetric_key.bucket: Destroying... [id=abjatruek5pla4ikkd0g]
+yandex_kms_symmetric_key.bucket: Destruction complete after 1s
+yandex_iam_service_account.storage: Destruction complete after 9s
+
+Apply complete! Resources: 0 added, 0 changed, 8 destroyed.
+# временная роль admin снята; ниже — сверка с облаком
+$ yc storage bucket list --folder-id <folder_id>
++------+-----------+----------+-----------------------+------------+
+| NAME | FOLDER ID | MAX SIZE | DEFAULT STORAGE CLASS | CREATED AT |
++------+-----------+----------+-----------------------+------------+
++------+-----------+----------+-----------------------+------------+
+
+$ yc kms symmetric-key list --folder-id <folder_id>
++----+------+--------------------+-------------------+------------+--------+
+| ID | NAME | PRIMARY VERSION ID | DEFAULT ALGORITHM | CREATED AT | STATUS |
++----+------+--------------------+-------------------+------------+--------+
++----+------+--------------------+-------------------+------------+--------+
+
+$ yc certificate-manager certificate list --folder-id <folder_id>
++----+------+---------+-----------+------+--------+
+| ID | NAME | DOMAINS | NOT AFTER | TYPE | STATUS |
++----+------+---------+-----------+------+--------+
++----+------+---------+-----------+------+--------+
+
+$ yc iam service-account list --folder-id <folder_id>
++----------------------+-----------+--------+---------------------+-----------------------+
+|          ID          |   NAME    | LABELS |     CREATED AT      | LAST AUTHENTICATED AT |
++----------------------+-----------+--------+---------------------+-----------------------+
+| ajerd2n99sk27rd8e3s1 | terraform |        | 2026-07-08 07:34:51 | 2026-11-27 03:10:00   |
++----------------------+-----------+--------+---------------------+-----------------------+
+
+$ yc resource-manager folder list-access-bindings <folder_id>
++---------+----------------+----------------------+
+| ROLE ID |  SUBJECT TYPE  |      SUBJECT ID      |
++---------+----------------+----------------------+
+| editor  | serviceAccount | ajerd2n99sk27rd8e3s1 |
++---------+----------------+----------------------+
+
+$ echo "ресурсов в state: $(terraform -chdir=terraform state list | wc -l)"
+ресурсов в state: 0
+# адрес сайта через пару минут после удаления бакета
+$ date -u +%H:%M:%SZ; curl -sS -m 20 -o /dev/null -w "HTTP %{http_code} -> %{redirect_url}\n" http://vpakspace.213-180-193-247.sslip.io/
+03:56:33Z
+HTTP 301 -> https://vpakspace.213-180-193-247.sslip.io/
+$ curl -sSk -m 20 https://vpakspace.213-180-193-247.sslip.io/ | grep -E "Code|Message"   # -k: сертификат у соединений уже разный
+<li>Code: NoSuchBucket</li>
+<li>Message: The specified bucket does not exist.</li>

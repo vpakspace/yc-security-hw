@@ -1,0 +1,19 @@
+$ yc resource-manager folder list-access-bindings <folder_id> | grep -E "ROLE ID|ajerd2n99sk27rd8e3s1"
+|    ROLE ID     |  SUBJECT TYPE  |      SUBJECT ID      |
+| editor         | serviceAccount | ajerd2n99sk27rd8e3s1 |
+$ yc resource-manager cloud list-access-bindings <cloud_id> --format json | jq -c "[.[] | select(.subject.id==\"ajerd2n99sk27rd8e3s1\")]"   # роли аккаунта на облаке
+[]
+$ yc organization-manager organization list-access-bindings <organization_id> --format json | jq -c "[.[] | select(.subject.id==\"ajerd2n99sk27rd8e3s1\")]"   # роли аккаунта на организации
+[]
+$ yc kms symmetric-key list-access-bindings --name netology-bucket-key
++-----------------------------+----------------+----------------------+
+|           ROLE ID           |  SUBJECT TYPE  |      SUBJECT ID      |
++-----------------------------+----------------+----------------------+
+| kms.keys.encrypterDecrypter | serviceAccount | ajedu0ctijs62hae8tu7 |
++-----------------------------+----------------+----------------------+
+
+$ scripts/probe_editor.sh
+токен получен по авторизованному ключу аккаунта ajerd2n99sk27rd8e3s1
+без токена : HTTP 403, 183 байт
+с токеном  : HTTP 200, 41669 байт
+sha256 ответа с токеном: f315f5e3f06ce95f2aec3f314e2c3c85110fff76559d698a81098444f9537d9e

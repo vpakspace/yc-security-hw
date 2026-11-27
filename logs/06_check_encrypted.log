@@ -1,0 +1,30 @@
+$ scripts/check.sh
+== 1. Настройки бакета vpakspace-20261125 (yc storage bucket get --full)
+anonymous_access_flags:
+  read: true
+  list: false
+  config_read: false
+encryption:
+  rules:
+    - kms_master_key_id: abjatruek5pla4ikkd0g
+      sse_algorithm: aws:kms
+
+== 2. Метаданные объекта picture.png (head-object)
+etag: '"e993fef8c3d834d275bf5689bf5f721c"'
+accept_ranges: bytes
+content_length: "41669"
+content_type: image/png
+last_modified_at: "2026-11-27T03:03:12Z"
+server_side_encryption: aws:kms
+sse_kms_key_id: abjatruek5pla4ikkd0g
+
+
+== 3. Анонимный запрос: curl https://vpakspace-20261125.storage.yandexcloud.net/picture.png
+HTTP 403, получено 183 байт
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>AccessDenied</Code><Message>Access Denied</Message><Resource>/picture.png</Resource><RequestId>fbccdf05cbb480ac</RequestId></Error>
+
+== 4. Авторизованное скачивание (yc storage s3api get-object) и сравнение с исходным файлом
+исходный файл : f315f5e3f06ce95f2aec3f314e2c3c85110fff76559d698a81098444f9537d9e
+из бакета     : f315f5e3f06ce95f2aec3f314e2c3c85110fff76559d698a81098444f9537d9e
+содержимое совпадает

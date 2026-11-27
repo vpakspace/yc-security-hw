@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Статический сайт в Object Storage</title>
+  <style>
+    body { margin: 0; font-family: system-ui, "DejaVu Sans", sans-serif; background: #0f1f3d; color: #eef4ff; }
+    main { max-width: 760px; margin: 0 auto; padding: 56px 24px; }
+    h1 { margin: 0 0 12px; font-size: 32px; }
+    p { line-height: 1.6; color: #c5d6f2; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 10px 24px; margin: 32px 0; }
+    dt { color: #8fb4ea; }
+    dd { margin: 0; }
+    code { background: #1c335e; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Статический сайт из бакета</h1>
+    <p>Эта страница лежит обычным файлом в бакете Yandex Object Storage: ни виртуальных машин, ни веб-сервера.</p>
+    <dl>
+      <dt>Домен и имя бакета</dt>
+      <dd><code>vpakspace.213-180-193-247.sslip.io</code></dd>
+      <dt>Сертификат</dt>
+      <dd>Let's Encrypt через Certificate Manager, проверка прав на домен по HTTP</dd>
+      <dt>Задание</dt>
+      <dd>«Безопасность в облачных провайдерах», Netology</dd>
+    </dl>
+    <p id="proto"></p>
+  </main>
+  <script>
+    // Показывает, по какому протоколу открыта страница именно сейчас.
+    document.getElementById("proto").textContent = "Страница открыта по протоколу " + location.protocol.replace(":", "").toUpperCase() + ".";
+  </script>
+</body>
+</html>

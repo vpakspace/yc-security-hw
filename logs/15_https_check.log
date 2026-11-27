@@ -1,0 +1,36 @@
+$ date -u +%H:%M:%SZ; scripts/site.sh check
+03:28:00Z
+== DNS
+213.180.193.247
+== http://vpakspace.213-180-193-247.sslip.io/
+HTTP 301
+== https://vpakspace.213-180-193-247.sslip.io/
+HTTP 200, проверка сертификата: 0 (0 — без ошибок)
+== сертификат, который отдаёт сервер
+subject=CN = vpakspace.213-180-193-247.sslip.io
+issuer=C = US, O = Let's Encrypt, CN = YR1
+notBefore=Nov 27 02:15:02 2026 GMT
+notAfter=Feb 25 02:15:01 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:vpakspace.213-180-193-247.sslip.io
+$ curl -sS -m 30 -D - -o /dev/null https://vpakspace.213-180-193-247.sslip.io/
+HTTP/2 200 
+server: nginx
+date: Fri, 27 Nov 2026 03:28:03 GMT
+content-type: text/html; charset=utf-8
+content-length: 1752
+accept-ranges: bytes
+etag: "8b3f591dfb48caf6a0a29fd533fc7b6c"
+last-modified: Fri, 27 Nov 2026 03:11:24 GMT
+x-amz-request-id: ffb8ac4362a781bf
+
+$ curl -sS -m 30 -D - -o /dev/null http://vpakspace.213-180-193-247.sslip.io/
+HTTP/1.1 301 Moved Permanently
+Server: nginx
+Date: Fri, 27 Nov 2026 03:28:09 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Keep-Alive: timeout=60
+Location: https://vpakspace.213-180-193-247.sslip.io/
+

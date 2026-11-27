@@ -1,0 +1,32 @@
+$ yc resource-manager folder list-access-bindings <folder_id>
++----------------+----------------+----------------------+
+|    ROLE ID     |  SUBJECT TYPE  |      SUBJECT ID      |
++----------------+----------------+----------------------+
+| storage.editor | serviceAccount | ajedu0ctijs62hae8tu7 |
+| editor         | serviceAccount | ajerd2n99sk27rd8e3s1 |
++----------------+----------------+----------------------+
+
+$ yc kms symmetric-key list-access-bindings --name netology-bucket-key
++-----------------------------+----------------+----------------------+
+|           ROLE ID           |  SUBJECT TYPE  |      SUBJECT ID      |
++-----------------------------+----------------+----------------------+
+| kms.keys.encrypterDecrypter | serviceAccount | ajedu0ctijs62hae8tu7 |
++-----------------------------+----------------+----------------------+
+
+$ yc kms symmetric-key get --name netology-bucket-key
+id: abjatruek5pla4ikkd0g
+folder_id: <folder_id>
+created_at: "2026-11-27T03:00:19Z"
+name: netology-bucket-key
+description: Шифрование содержимого бакета vpakspace-20261125
+status: ACTIVE
+primary_version:
+  id: abjh57274mibpbcoqq0i
+  key_id: abjatruek5pla4ikkd0g
+  status: ACTIVE
+  algorithm: AES_256
+  created_at: "2026-11-27T03:00:19Z"
+  primary: true
+default_algorithm: AES_256
+rotation_period: 31536000s
+

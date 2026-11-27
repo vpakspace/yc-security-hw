@@ -1,0 +1,37 @@
+$ terraform -chdir=terraform apply -input=false -no-color -auto-approve -replace=yandex_storage_object.picture
+yandex_iam_service_account.storage: Refreshing state... [id=ajedu0ctijs62hae8tu7]
+yandex_kms_symmetric_key.bucket: Refreshing state... [id=abjatruek5pla4ikkd0g]
+yandex_iam_service_account_static_access_key.storage: Refreshing state... [id=aje6nfej2qi0m1lkja3d]
+yandex_resourcemanager_folder_iam_member.storage: Refreshing state... [id=<folder_id>/storage.editor/serviceAccount:ajedu0ctijs62hae8tu7]
+yandex_kms_symmetric_key_iam_member.storage: Refreshing state... [id=abjatruek5pla4ikkd0g/kms.keys.encrypterDecrypter/serviceAccount:ajedu0ctijs62hae8tu7]
+yandex_storage_bucket.this: Refreshing state... [id=vpakspace-20261125]
+time_sleep.wait_for_iam: Refreshing state... [id=2026-11-27T03:01:27Z]
+yandex_storage_object.picture: Refreshing state... [id=picture.png]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # yandex_storage_object.picture will be replaced, as requested
+-/+ resource "yandex_storage_object" "picture" {
+      ~ id           = "picture.png" -> (known after apply)
+      - tags         = {} -> null
+        # (8 unchanged attributes hidden)
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+yandex_storage_object.picture: Destroying... [id=picture.png]
+yandex_storage_object.picture: Destruction complete after 1s
+yandex_storage_object.picture: Creating...
+yandex_storage_object.picture: Creation complete after 1s [id=picture.png]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+Outputs:
+
+bucket_name = "vpakspace-20261125"
+kms_key_id = "abjatruek5pla4ikkd0g"
+picture_key = "picture.png"
+picture_url = "https://vpakspace-20261125.storage.yandexcloud.net/picture.png"

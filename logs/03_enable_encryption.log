@@ -1,0 +1,34 @@
+$ terraform -chdir=terraform plan -input=false -no-color -out=../.work/plan_enc.tfplan   # фрагмент вывода
+Terraform will perform the following actions:
+
+  # yandex_storage_bucket.this will be updated in-place
+  ~ resource "yandex_storage_bucket" "this" {
+        id                      = "vpakspace-20261125"
+        tags                    = {}
+        # (8 unchanged attributes hidden)
+
+      + server_side_encryption_configuration {
+          + rule {
+              + apply_server_side_encryption_by_default {
+                  + kms_master_key_id = "abjatruek5pla4ikkd0g"
+                  + sse_algorithm     = "aws:kms"
+                }
+            }
+        }
+
+        # (2 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+$ terraform -chdir=terraform apply -input=false -no-color ../.work/plan_enc.tfplan
+yandex_storage_bucket.this: Modifying... [id=vpakspace-20261125]
+yandex_storage_bucket.this: Modifications complete after 7s [id=vpakspace-20261125]
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name = "vpakspace-20261125"
+kms_key_id = "abjatruek5pla4ikkd0g"
+picture_key = "picture.png"
+picture_url = "https://vpakspace-20261125.storage.yandexcloud.net/picture.png"

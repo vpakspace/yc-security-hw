@@ -1,0 +1,4 @@
+# Скопировать в personal.auto.tfvars (файл в .gitignore) и подставить свои значения.
+# Terraform подхватывает *.auto.tfvars автоматически.
+cloud_id  = "<ID облака>"
+folder_id = "<ID каталога>"

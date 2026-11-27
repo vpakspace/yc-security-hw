@@ -1,0 +1,46 @@
+$ scripts/site.sh bucket
+создан бакет vpakspace.213-180-193-247.sslip.io
+включён хостинг: index.html, error.html
+загружен index.html
+загружен error.html
+$ yc storage bucket get --name vpakspace.213-180-193-247.sslip.io --full
+name: vpakspace.213-180-193-247.sslip.io
+folder_id: <folder_id>
+anonymous_access_flags:
+  read: true
+  list: false
+  config_read: false
+default_storage_class: STANDARD
+versioning: VERSIONING_DISABLED
+acl: {}
+created_at: "2026-11-27T03:05:49.076772Z"
+website_settings:
+  index: index.html
+  error: error.html
+  redirect_all_requests: {}
+resource_id: e3ec8caj4p2pq0do655k
+
+$ curl -sS -m 30 -D - -o /dev/null http://vpakspace.213-180-193-247.sslip.io/
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 27 Nov 2026 03:06:02 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 1790
+Connection: keep-alive
+Keep-Alive: timeout=60
+Accept-Ranges: bytes
+Etag: "f0477573c0acb496f74cd0dfb4dcaf3d"
+Last-Modified: Fri, 27 Nov 2026 03:05:55 GMT
+X-Amz-Request-Id: 80046522f6a1c9a2
+
+
+# Страница после первой загрузки правилась; ниже — повторная загрузка финальной версии из site/.
+$ scripts/site.sh pages
+загружен index.html
+загружен error.html
+$ curl -sS -m 30 https://vpakspace.213-180-193-247.sslip.io/ | md5sum; md5sum site/index.html
+8b3f591dfb48caf6a0a29fd533fc7b6c  -
+8b3f591dfb48caf6a0a29fd533fc7b6c  site/index.html
+$ curl -sS -m 20 -H "Host: no-such-bucket.213-180-193-247.sslip.io" http://213.180.193.247/ | grep -E "Code|Message"   # имя, для которого бакета нет
+<li>Code: NoSuchBucket</li>
+<li>Message: The specified bucket does not exist.</li>

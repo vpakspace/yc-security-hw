@@ -1,0 +1,29 @@
+$ terraform -chdir=terraform apply -input=false -no-color ../.work/plan_noenc.tfplan
+yandex_kms_symmetric_key.bucket: Creating...
+yandex_iam_service_account.storage: Creating...
+yandex_kms_symmetric_key.bucket: Creation complete after 4s [id=abjatruek5pla4ikkd0g]
+yandex_storage_bucket.this: Creating...
+yandex_iam_service_account.storage: Creation complete after 8s [id=ajedu0ctijs62hae8tu7]
+yandex_kms_symmetric_key_iam_member.storage: Creating...
+yandex_resourcemanager_folder_iam_member.storage: Creating...
+yandex_iam_service_account_static_access_key.storage: Creating...
+yandex_iam_service_account_static_access_key.storage: Creation complete after 3s [id=aje6nfej2qi0m1lkja3d]
+yandex_storage_bucket.this: Still creating... [00m10s elapsed]
+yandex_resourcemanager_folder_iam_member.storage: Creation complete after 6s [id=<folder_id>/storage.editor/serviceAccount:ajedu0ctijs62hae8tu7]
+yandex_kms_symmetric_key_iam_member.storage: Creation complete after 6s [id=abjatruek5pla4ikkd0g/kms.keys.encrypterDecrypter/serviceAccount:ajedu0ctijs62hae8tu7]
+time_sleep.wait_for_iam: Creating...
+yandex_storage_bucket.this: Creation complete after 12s [id=vpakspace-20261125]
+time_sleep.wait_for_iam: Still creating... [00m10s elapsed]
+time_sleep.wait_for_iam: Creation complete after 57s [id=2026-11-27T03:01:27Z]
+time_sleep.wait_for_iam: Still creating... [00m57s elapsed]
+yandex_storage_object.picture: Creating...
+yandex_storage_object.picture: Creation complete after 1s [id=picture.png]
+
+Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name = "vpakspace-20261125"
+kms_key_id = "abjatruek5pla4ikkd0g"
+picture_key = "picture.png"
+picture_url = "https://vpakspace-20261125.storage.yandexcloud.net/picture.png"
